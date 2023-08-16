@@ -1,0 +1,202 @@
+﻿<Window x:Class="Project_Manager.Views.Statistics"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Project_Manager.Views"
+        xmlns:dvizual="clr-namespace:DiagramVisualizator;assembly=DiagramVisualizator"
+        xmlns:validation="clr-namespace:Project_Manager.Validation"
+        mc:Ignorable="d"
+        Title="Statistics" Height="500" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="44"/>
+            <RowDefinition Height="3"/>
+            <RowDefinition/>
+            <RowDefinition Height="3"/>
+            <RowDefinition Height="38"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Statistics module" FontSize="25" 
+                   TextAlignment="Center" Padding="0,5,0,0"/>
+        <TabControl Grid.Row="2">
+            <TabItem Header="Статистика" FontSize="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="371*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="399*"/>
+                    </Grid.ColumnDefinitions>
+                    <GridSplitter Grid.Column="1" Width="3" 
+                                  VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Stretch"
+                                  Background="Black"/>
+                    <TabControl Grid.Column="2" x:Name="tab">
+                        <TabItem Header="Результаты поиска:">
+                            <ListView x:Name="SearchResultsList"
+                                      ItemsSource="{Binding SearchResult, 
+                                UpdateSourceTrigger=PropertyChanged
+                                }"/>
+                        </TabItem>
+                        <TabItem Header="Диаграммы">
+                            <TabControl>
+                                <TabItem Header="Доход" >
+                                    <dvizual:DiagramCreator 
+                                        DateTimeCollection="{Binding MonthCollectionProp,
+                                        UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                        
+                                        HeightActual="{Binding ElementName=tab, Path=ActualHeight,
+                                        UpdateSourceTrigger=PropertyChanged}"
+                                        
+                                        ObjectCollection="{Binding RevenueCollectionProp,
+                                        UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                         />
+                                </TabItem>
+                                <TabItem Header="Средний доход">
+                                    <dvizual:DiagramCreator 
+                                        DateTimeCollection="{Binding MonthCollectionProp,
+                                        UpdateSourceTrigger=PropertyChanged}"
+                                        ObjectCollection="{Binding MiddleRevenueCollection,
+                                        UpdateSourceTrigger=PropertyChanged}"
+                                        HeightActual="{Binding ElementName=tab, Path=ActualHeight,
+                                        UpdateSourceTrigger=PropertyChanged}"
+                                    />
+
+                                </TabItem>
+                                <TabItem Header="Кол-во работ по месяцам">
+                                    <dvizual:DiagramCreator 
+                                        
+                                        
+                                        DateTimeCollection="{Binding MonthCollectionProp,
+                                        UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                        
+                                        ObjectCollection="{Binding CountCollectionProp,
+                                        UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                        
+                                        HeightActual="{Binding ElementName=tab, Path=ActualHeight,
+                                        UpdateSourceTrigger=PropertyChanged}"
+                                         />
+                                </TabItem>
+                                <TabItem Header="Статистика">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="26*"/>
+                                            <ColumnDefinition Width="119*"/>
+                                            <ColumnDefinition Width="31*"/>
+                                            <ColumnDefinition Width="208*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="33*"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="23*"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="56*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="Максимальное и минимальное затраченное время:"
+                                                   Grid.ColumnSpan="4" FontSize="16"
+                                                   VerticalAlignment="Center" Height="22" Margin="0,9"/>
+                                        <TextBlock Text="Максимум:"
+                                                   Grid.Row="1" Grid.Column="1"
+                                                   Foreground="Red"/>
+
+                                        <TextBlock Text="Минимум:"
+                                                   Grid.Row="3" Grid.Column="1"
+                                                   Foreground="Green"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="2" Foreground="Red"
+                                                   Text="{Binding MaxAmountOfDays, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBlock Grid.Row="3" Grid.Column="2" Foreground="Green"
+                                                   Text="{Binding MinAmountOfDays, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="3" Foreground="Red"
+                                                   Text="{Binding MaxAmountOfDaysDate, UpdateSourceTrigger=PropertyChanged,
+                                            StringFormat=Дата: {0:dd.MM.yyyy}}"/>
+                                        <TextBlock Grid.Row="3" Grid.Column="3" Foreground="Green"
+                                                   Text="{Binding MinAmountOfDaysDate, UpdateSourceTrigger=PropertyChanged,
+                                            StringFormat=Дата: {0:dd.MM.yyyy}}"/>
+                                        
+                                        <TextBlock Grid.Row="2" Grid.Column="3"
+                                                   Text="{Binding MaxProjectName, UpdateSourceTrigger=PropertyChanged}"
+                                                   Foreground="Red"/>
+
+                                        <TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding MinProjectName,
+                                            UpdateSourceTrigger=PropertyChanged}" Foreground="Red"/>
+                                    </Grid>
+                                </TabItem>
+                            </TabControl>
+                        </TabItem>
+                    </TabControl>
+                    <Grid Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="9*"/>
+                            <ColumnDefinition Width="324"/>
+                            <ColumnDefinition Width="9*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="6*"/>
+                            <RowDefinition Height="33"/>
+                            <RowDefinition Height="41*"/>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="33"/>
+                            <RowDefinition Height="16*"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="22*"/>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="24*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding SearchResult.Count,
+                            UpdateSourceTrigger=PropertyChanged, 
+                            StringFormat=Найдено: {0} Записей}" Grid.Column="1"
+                                   Grid.Row="7"/>
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="1"
+                                   Text="{Binding ArchiveCollection.CommonSum,
+                            UpdateSourceTrigger=PropertyChanged,
+                            StringFormat=Common_Sum: {0} ед.}"/>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
+                            <TextBlock Text="Начало:"/>
+                            <TextBox Margin="30,0,0,0" Width="200" 
+                                     Validation.ErrorTemplate="{StaticResource ResourceKey=ErrorTemplate}">
+                                <Binding Path="Start" Mode="OneWayToSource" 
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Converter="{StaticResource DateTimeConverter}">
+                                    <Binding.ValidationRules>
+                                        <validation:DateTimeValidation/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="5">
+                            <TextBlock Text="Конец:  "/>
+                            <TextBox Margin="30,0,0,0" Width="200" 
+                                     Validation.ErrorTemplate="{StaticResource ResourceKey=ErrorTemplate}">
+                                <Binding Path="End" Mode="OneWayToSource" 
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Converter="{StaticResource DateTimeConverter}">
+                                    <Binding.ValidationRules>
+                                        <validation:DateTimeValidation/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Grid.Row="9" Orientation="Horizontal" >
+                            <Button  
+                                
+                                Margin="0,0,75,0"
+                                Content="Поиск"
+                                Command="{Binding OnSearchButtonPressed}"/>
+                            <Button Content="Построить графики"
+                                    Command="{Binding OnBuildGraphicsPressed}"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Архив" FontSize="20">
+                <ListView 
+                    ItemsSource="{Binding ArchiveCollection.ArchiveProp
+                    , UpdateSourceTrigger=PropertyChanged}"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

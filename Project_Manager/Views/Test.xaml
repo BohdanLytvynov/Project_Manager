@@ -1,0 +1,45 @@
+﻿<Window x:Class="Project_Manager.Views.Test"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Project_Manager.Views"
+        mc:Ignorable="d"
+        Title="Test" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="168*"/>
+            <RowDefinition Height="85*"/>
+            <RowDefinition Height="167*"/>
+        </Grid.RowDefinitions>
+        <Canvas Background="#FF151414" Grid.RowSpan="3">
+            <TextBox Canvas.Top="20" Canvas.Left="100" Width="500" Height="50"
+                     >
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate >
+                                    <Border BorderBrush="white"
+                                            Background="White"
+                                            BorderThickness="4" CornerRadius="20">
+                                        <TextBox BorderThickness="0" Margin="5"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <TextBox Canvas.Left="142" Canvas.Top="189" Width="500" Height="67">
+                <TextBox.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFEC708F" Offset="0"/>
+                        <GradientStop Color="#FFC53A6D" Offset="1"/>
+                    </LinearGradientBrush>
+                </TextBox.Background>
+            </TextBox>
+
+        </Canvas>
+    </Grid>
+</Window>
