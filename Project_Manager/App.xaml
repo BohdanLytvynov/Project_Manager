@@ -606,12 +606,13 @@
                                 </StackPanel>
                             </Border>
 
-
-                            <customControls:CustomDatePicker>
-                                <customControls:CustomDatePicker.Calendar>
-                                    <customControls:CustomCalendar 
-                                        />
-                                </customControls:CustomDatePicker.Calendar>
+                            <customControls:CustomDatePicker x:Name="CMI3"
+                                                             ChosenDate="{Binding Date,
+                                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                             >
+                                <customControls:CustomDatePicker.CustomCalendar>
+                                    <customControls:CustomCalendar/>
+                                </customControls:CustomDatePicker.CustomCalendar>
                             </customControls:CustomDatePicker>
 
                             <ToggleButton x:Name="tglbtn2"
@@ -684,8 +685,9 @@
                 </DataTrigger>
                 <DataTrigger Binding="{Binding SelectedCBIndex}" Value="2">
                     <Setter TargetName="CMText" Property="Text"
-                            Value="{Binding ElementName=CMI3, Path=Text,
-                        UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+                            Value="{Binding ElementName=CMI3, Path=ChosenDate,
+                        UpdateSourceTrigger=PropertyChanged, Mode=OneWay,
+                        Converter={StaticResource DateTimeConverter}}"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding SelectedCBIndex}" Value="3">
                     <Setter Property="Text" TargetName="CMText"

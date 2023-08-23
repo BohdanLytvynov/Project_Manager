@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ViewModelBaseLib.ViewModelBase;
-using StringExtensionsLibrary;
 using System.Windows.Controls;
 
 namespace ModelsLib.Models
@@ -197,49 +196,7 @@ namespace ModelsLib.Models
 
         #region Operators of equalation
 
-        public static bool operator > (Project p1, Project p2 )
-        {
-            if (p1.urgency.CompareStrings("Срочный") && p2.urgency.CompareStrings("Обычный"))
-            {
-                return true;
-            }
-            if (p1.urgency.CompareStrings("Срочный") && p2.urgency.CompareStrings("Приоритет"))
-            {
-                return true;
-            }
-            if (p1.urgency.CompareStrings("Обычный") && p2.urgency.CompareStrings("Приоритет"))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public static bool operator < (Project p1, Project p2)
-        {
-            if (p1.urgency.CompareStrings("Приоритет") && p2.urgency.CompareStrings("Срочный"))
-            {
-                return true;
-            }
-            if (p1.urgency.CompareStrings("Обычный") && p2.urgency.CompareStrings("Срочный"))
-            {
-                return true;
-            }
-            if (p1.urgency.CompareStrings("Приоритет") && p2.urgency.CompareStrings("Обычный"))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public static bool operator == (Project p1, Project p2)
-        {
-            return p1.urgency.CompareStrings(p2.urgency);
-        }
-
-        public static bool operator != (Project p1, Project p2)
-        {
-            return p1.urgency.CompareStrings(p2.urgency);
-        }
+       
         #endregion
 
         #endregion

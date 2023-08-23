@@ -36,21 +36,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CustomControlsLibrary">
-      <HintPath>..\..\..\..\..\Libraries\Custom_WPF_Controls_DotNetFramework\CustomControlsLibrary\bin\Debug\CustomControlsLibrary.dll</HintPath>
+      <HintPath>..\..\..\Libraries\Custom_WPF_Controls_DotNetFramework\CustomControlsLibrary\bin\Debug\CustomControlsLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="RepositoryFunctionsLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\RepositoryFunctionsLibrary\RepositoryFunctionsLibrary\bin\Debug\RepositoryFunctionsLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="SerializationLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Serialization Libraries\SerializationLibrary\bin\Debug\SerializationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

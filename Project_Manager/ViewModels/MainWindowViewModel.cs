@@ -5,11 +5,8 @@ using Storage;
 using ViewModelBaseLib.Commands;
 using System.Windows.Input;
 using Project_Manager.Views;
-using Project_Manager.ViewModels;
-using RepositoryFunctionsLibrary;
 using System.Windows;
 using System.ComponentModel;
-using SerializationLibrary;
 using System.IO;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
@@ -125,30 +122,18 @@ namespace Project_Manager.ViewModels
 
         static MainWindowViewModel()
         {
-            DeserializeSettings();
+            //DeserializeSettings();
             
-            Application.Current.MainWindow.Closing += new CancelEventHandler(OnAppClosing);
+            //Application.Current.MainWindow.Closing += new CancelEventHandler(OnAppClosing);
         }
 
         public MainWindowViewModel(Window w)
-        {            
-            DispatcherJsonSerializer.DispatcherObject = w;
-
-            if (settings.FirstStart)
-            {
-                ShowDialogWindow();
-                settings.FirstStart = false;
-            }
-
+        {                        
             pu = new ProjectUrgency();
 
-            RepositoryFunctions.CheckIfFIleExists(settings.PathToDataBase);
+            collectionsdb = new CollectionsDB();
 
-            RepositoryFunctions.CheckIfFIleExists(settings.PathToArchive);
-
-            collectionsdb = DeserializeIfDbIsNotEmpty<CollectionsDB>(settings.PathToDataBase, collectionsdb);
-
-            archive = DeserializeIfDbIsNotEmpty<Archive>(settings.PathToArchive, archive);
+            archive = new Archive();
 
             OnSettingsButtonPressed = new Command(
                 CanOnSettingsButtonPressedExecute,
@@ -222,35 +207,27 @@ namespace Project_Manager.ViewModels
         }
 
         private static void SaveCollections()
-        {
-            RepositoryFunctions.CheckIfFIleExists(settings.PathToDataBase);
-
-            RepositoryFunctions.CheckIfFIleExists(settings.PathToArchive);
-
+        {            
             DispatcherJsonSerializer.SerializeWithDispatcher<CollectionsDB>(settings.PathToDataBase, collectionsdb);
-
-            JsonSerialization.Serialize<Archive>(settings.PathToArchive, archive);
-
+            
             SerializeSettings();            
         }
 
         private static void SerializeSettings()
         {
-            RepositoryFunctions.CheckIfFIleExists(pathtoconfig);
-
-            JsonSerialization.Serialize<Settings>(pathtoconfig, settings);
+            
         }
 
         private static void DeserializeSettings()
         {
-            RepositoryFunctions.CheckIfFIleExists(pathtoconfig);
+            
 
             FileInfo file = new FileInfo(pathtoconfig);
 
             if (file.Length <= 2 || file.Length == 0)
                 settings = new Settings();
             else
-                settings = JsonSerialization.Deserealize<Settings>(pathtoconfig, settings);
+                settings = new Settings();
         }
 
         #endregion
@@ -263,7 +240,7 @@ namespace Project_Manager.ViewModels
             if (file.Length <= 2 || file.Length == 0)
                 return new T();
             else
-                return JsonSerialization.Deserealize<T>(path, Object);
+                return new T();
         }
         #endregion
 
@@ -495,57 +472,57 @@ namespace Project_Manager.ViewModels
 
         private void MainMerge(ObservableCollection<Project> collection, int left, int middle, int right)
         {
-            int n1 = middle - left + 1;
-            int n2 = right - middle;
+            //int n1 = middle - left + 1;
+            //int n2 = right - middle;
 
-            ObservableCollection<Project> L = new ObservableCollection<Project>();
+            //ObservableCollection<Project> L = new ObservableCollection<Project>();
 
-            ObservableCollection<Project> R = new ObservableCollection<Project>();
+            //ObservableCollection<Project> R = new ObservableCollection<Project>();
 
-            int i, j;
+            //int i, j;
 
-            for (i = 0; i < n1; i++)
-            {
-                L.Add(collection[left + i]);
-            }
+            //for (i = 0; i < n1; i++)
+            //{
+            //    L.Add(collection[left + i]);
+            //}
 
-            for (j = 0; j < n2; j++)
-            {
-                R.Add(collection[middle + 1 + j]);
-            }
+            //for (j = 0; j < n2; j++)
+            //{
+            //    R.Add(collection[middle + 1 + j]);
+            //}
 
-            i = 0; j = 0;
+            //i = 0; j = 0;
 
-            int k = left;
+            //int k = left;
 
-            while (i< n1 && j<n2)
-            {
-                if (L[i] > R[j] || L[i] == R[j])
-                {
-                    collection[k] = L[i];
-                    i++;
-                }
-                else
-                {
-                    collection[k] = R[j];
-                    j++;
-                }
-                k++;
+            //while (i< n1 && j<n2)
+            //{
+            //    if (L[i] > R[j] || L[i] == R[j])
+            //    {
+            //        collection[k] = L[i];
+            //        i++;
+            //    }
+            //    else
+            //    {
+            //        collection[k] = R[j];
+            //        j++;
+            //    }
+            //    k++;
 
-                while (i<n1)
-                {
-                    collection[k] = L[i];
-                    i++;
-                    k++;
-                }
+            //    while (i<n1)
+            //    {
+            //        collection[k] = L[i];
+            //        i++;
+            //        k++;
+            //    }
 
-                while (j<n2)
-                {
-                    collection[k] = R[j];
-                    j++;
-                    k++;
-                }
-            }
+            //    while (j<n2)
+            //    {
+            //        collection[k] = R[j];
+            //        j++;
+            //        k++;
+            //    }
+            //}
         }
         #endregion
     }

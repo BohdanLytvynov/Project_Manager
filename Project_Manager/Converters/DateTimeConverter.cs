@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace Project_Manager.Converters
@@ -13,28 +14,22 @@ namespace Project_Manager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string str = String.Empty;
+            DateTime temp;
 
-            if (value is DateTime)
-            {
-                str= value.ToString();
-            }
+            if ((DateTime.TryParse(value.ToString(), out temp)))
+                return temp.ToShortDateString();
 
-            return str;
+            return DependencyProperty.UnsetValue;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var str = value as string;
+            DateTime temp;
 
-            DateTime temp = new DateTime();
-
-            if (String.IsNullOrWhiteSpace(str))
-            {
+            if (DateTime.TryParse(value.ToString(), out temp))
                 return temp;
-            }
 
-            return DateTime.Parse(str);            
+            return DependencyProperty.UnsetValue;
         }
     }
 }
