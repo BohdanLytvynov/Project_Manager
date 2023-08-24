@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using DispatcherJsonSerialization;
 using System.Windows.Data;
+using System.Data.Common;
+using Data;
 
 namespace Project_Manager.ViewModels
 {
@@ -27,6 +29,9 @@ namespace Project_Manager.ViewModels
     public class MainWindowViewModel: ViewModelCommon
     {
         #region Fields
+
+        private string m_pathToExe;
+
         CurrentColumn TheCurrentColumn; //The current column where user is now
         
         int selectednewprojectindex = -1; //index of selected project in a new projects column
@@ -128,12 +133,40 @@ namespace Project_Manager.ViewModels
         }
 
         public MainWindowViewModel(Window w)
-        {                        
+        {
+            #region Initialization
+
+            //Calculate path to DB
+
+            m_pathToExe = Environment.CurrentDirectory;
+
+            string pathToDB = m_pathToExe + @"\" + "DataBase" + @"\" + "PMDB.mdf";
+
+            //ConnectToLocalDB
+
+            DbConnectionStringBuilder csbuild =
+                new DbConnectionStringBuilder();
+
+            csbuild.ConnectionString =
+                "Data Source=(LocalDB)\\MSSQLLocalDB;" +
+                $"AttachDbFilename={pathToDB};" +
+                "Integrated Security=True;Connect Timeout=30";
+
+            PMDBContext pmdb = new PMDBContext(csbuild.ConnectionString);
+
+            #endregion
+
+            #region InitFields
+
             pu = new ProjectUrgency();
 
             collectionsdb = new CollectionsDB();
 
             archive = new Archive();
+
+            #endregion
+
+            #region Init Commands
 
             OnSettingsButtonPressed = new Command(
                 CanOnSettingsButtonPressedExecute,
@@ -163,6 +196,8 @@ namespace Project_Manager.ViewModels
                 CanStatisticButtonPressedExecute,
                 OnStatisticButtonPressedExecute
                 );
+
+            #endregion
         }
        
         #region Methods
