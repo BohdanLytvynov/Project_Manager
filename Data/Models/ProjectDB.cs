@@ -22,7 +22,7 @@ namespace Data.Models
         #region Primary Key
 
         [Key]
-        Guid Id { get; set; }
+        public Guid Id { get; set; }
 
         #endregion
 
@@ -40,7 +40,13 @@ namespace Data.Models
 
         public Urgency ProjectUrgency { get; set; }
 
-        public List<Projects_Users> ProjectUsersList { get; set; }
+        #endregion
+
+        #region Navigation Properties
+        
+        public User User { get; set; }
+
+        public Guid UserId { get; set; }
 
         #endregion
 

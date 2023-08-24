@@ -28,16 +28,20 @@ namespace Data.Models
 
         public string KeyWord { get; set; }
 
-        public List<Projects_Users> ProjectUsersList { get; set; }
+        #endregion
 
         #endregion
+
+        #region Navigation Properties
+
+        public ICollection<ProjectDB> Projects { get; set; }
 
         #endregion
 
         #region Ctor
         public User()
         {
-
+            Projects = new List<ProjectDB>();
         }
 
         public User(Guid id, string login, string password, string keyword)
@@ -49,6 +53,8 @@ namespace Data.Models
             Password = password;
 
             KeyWord = keyword;
+
+            Projects = new List<ProjectDB>();
         }
         #endregion
 
