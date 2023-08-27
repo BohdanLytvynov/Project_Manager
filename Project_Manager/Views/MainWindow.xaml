@@ -32,25 +32,28 @@
         </Grid.RowDefinitions>
         <Grid x:Name="ButtonsGrid" Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="156*"/>
-                <ColumnDefinition Width="0*"/>
-                <ColumnDefinition Width="197*"/>
-                <ColumnDefinition Width="224*"/>
-                <ColumnDefinition Width="215*"/>
+                <ColumnDefinition Width="43*"/>
+                <ColumnDefinition Width="43*"/>
+                <ColumnDefinition Width="43*"/>
+                <ColumnDefinition Width="43*"/>
+                <ColumnDefinition Width="43*"/>
             </Grid.ColumnDefinitions>
             <Button Style="{DynamicResource RoundCorner}"
                     Content="Добавить проект" 
                     Command="{Binding OnAddProjectButtonPressed}"/>
             <Button Style="{DynamicResource RoundCorner}"
-                    Content="Удалить проект"  Grid.Column="2"
+                    Content="Удалить проект"  Grid.Column="1"
                      Command="{Binding OnRemoveButtonPressed}"/>
             <Button Style="{DynamicResource RoundCorner}"
-                    Content="Настройки" Grid.Column="3"
-                   
+                    Content="Настройки" Grid.Column="2"                   
                     Command="{Binding OnSettingsButtonPressed}"/>
             <Button Style="{DynamicResource RoundCorner}"
-                    Content="Статистика"  Grid.Column="4"
+                    Content="Статистика"  Grid.Column="3"
                      Command="{Binding OnStatisticsButtonPressed}"/>
+            <Button Style="{DynamicResource RoundCorner}"
+                    Content="Пользователи"  Grid.Column="4"
+                    Command="{Binding OnUsersButtonPressed}" 
+                    />
         </Grid>
         <Grid Grid.Row="1" ShowGridLines="False">
             <Grid.ColumnDefinitions>

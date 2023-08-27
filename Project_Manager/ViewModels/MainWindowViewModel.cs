@@ -14,6 +14,7 @@ using DispatcherJsonSerialization;
 using System.Windows.Data;
 using System.Data.Common;
 using Data;
+using Project_Manager.Views.Windows;
 
 namespace Project_Manager.ViewModels
 {
@@ -28,6 +29,12 @@ namespace Project_Manager.ViewModels
 
     public class MainWindowViewModel: ViewModelCommon
     {
+        #region Windows
+
+        UserListWindow usersWindow;
+
+        #endregion
+
         #region Fields
 
         private string m_pathToExe;
@@ -123,6 +130,8 @@ namespace Project_Manager.ViewModels
         public ICommand OnRemoveButtonPressed { get; }
 
         public ICommand OnStatisticsButtonPressed { get; }
+
+        public ICommand OnUsersButtonPressed { get; }
         #endregion
 
         static MainWindowViewModel()
@@ -166,6 +175,12 @@ namespace Project_Manager.ViewModels
 
             #endregion
 
+            #region Init Fields
+
+            usersWindow = new UserListWindow();
+
+            #endregion
+
             #region Init Commands
 
             OnSettingsButtonPressed = new Command(
@@ -195,6 +210,11 @@ namespace Project_Manager.ViewModels
             OnStatisticsButtonPressed = new Command(
                 CanStatisticButtonPressedExecute,
                 OnStatisticButtonPressedExecute
+                );
+
+            OnUsersButtonPressed = new Command(
+                CanOnUsersButtonPressedExecute,
+                OnUsersButtonPressedExecute
                 );
 
             #endregion
@@ -443,6 +463,19 @@ namespace Project_Manager.ViewModels
             statisticwindow.Topmost = true;
 
             statisticwindow.Show();
+        }
+
+        #endregion
+
+        #region On Users Button Pressed
+
+        private bool CanOnUsersButtonPressedExecute(object p) => true;
+
+        private void OnUsersButtonPressedExecute(object p)
+        {
+            usersWindow.Topmost = true;
+
+            usersWindow.Show();            
         }
 
         #endregion

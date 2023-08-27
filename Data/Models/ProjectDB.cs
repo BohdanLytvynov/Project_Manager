@@ -87,6 +87,12 @@ namespace Data.Models
 
         #region Methods
 
+        public override string ToString()
+        {
+            return $"{Name} | {Description} | {CustomerName} | {DateOfStart.Date} |" +
+                $" {Cost} | {ProjectUrgency}";
+        }
+
         #endregion
     }
 }
