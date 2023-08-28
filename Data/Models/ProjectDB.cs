@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -40,10 +41,12 @@ namespace Data.Models
 
         public Urgency ProjectUrgency { get; set; }
 
+        public Currency ProjectCurrency { get; set; }
+
         #endregion
 
         #region Navigation Properties
-        
+
         public User User { get; set; }
 
         public Guid UserId { get; set; }
@@ -60,7 +63,7 @@ namespace Data.Models
 
         public ProjectDB(Guid id, string name, string description,
             string customerName, DateTime dateOfSatrt, double cost,
-            Urgency urgency)
+            Urgency urgency, Currency currency)
         {
             Id = id;
 
@@ -75,10 +78,12 @@ namespace Data.Models
             Cost = cost;
 
             ProjectUrgency = urgency;
+
+            ProjectCurrency = currency;
         }
 
         public ProjectDB(Guid id) : this(id, "Имя проекта", "Описание",
-            "Имя Заказчика", DateTime.Now.Date, 0, Urgency.Приоритет)
+            "Имя Заказчика", DateTime.Now.Date, 0, Urgency.Приоритет, Currency.UAN)
         {
 
         }

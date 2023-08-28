@@ -51,10 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ArchiveNote.cs" />
+    <Compile Include="Models\Enums\Currency.cs" />
     <Compile Include="Models\ProjectDB.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserSettings.cs" />
-    <Compile Include="PMDBContext.cs" />
+    <Compile Include="DBContexts\PMDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

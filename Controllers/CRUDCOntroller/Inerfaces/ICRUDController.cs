@@ -11,5 +11,11 @@ namespace Controllers.CRUDCOntroller.Inerfaces
         void Add(TEntity entity);
 
         void Update(Guid id, TEntity newEntity);
+
+        void Remove(Guid id);
+
+        IEnumerable<TEntity> GetAll();
+
+        TEntity Get(Guid id);
     }
 }

@@ -36,12 +36,16 @@ namespace Data.Models
 
         public ICollection<ProjectDB> Projects { get; set; }
 
+        public ICollection<ArchiveNote> ArchiveNotes { get; set; }
+
         #endregion
 
         #region Ctor
         public User()
         {
             Projects = new List<ProjectDB>();
+
+            ArchiveNotes = new List<ArchiveNote>();
         }
 
         public User(Guid id, string login, string password, string keyword)
@@ -55,6 +59,8 @@ namespace Data.Models
             KeyWord = keyword;
 
             Projects = new List<ProjectDB>();
+
+            ArchiveNotes = new List<ArchiveNote>();
         }
         #endregion
 

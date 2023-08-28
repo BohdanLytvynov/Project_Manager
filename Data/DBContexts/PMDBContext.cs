@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data
+namespace Data.DBContexts
 {
     public class PMDBContext : DbContext
     {
@@ -20,7 +20,9 @@ namespace Data
 
         public DbSet<ProjectDB> ProjectsTable { get; set; }
 
-        public DbSet<User> UsersTable { get; set; }       
+        public DbSet<User> UsersTable { get; set; }
+
+        public DbSet<ArchiveNote> ArchiveNotes { get; set; }
 
         #endregion
 
