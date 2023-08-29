@@ -27,6 +27,16 @@ namespace Controllers.CRUDController
 
         #endregion
 
+        #region Properties
+
+        public CancellationTokenSource CancellationTokenSource 
+        {
+            get=> m_cancellationTokenSource;
+            set=> m_cancellationTokenSource = value;
+        }
+
+        #endregion
+
         #region Ctor
 
         public UserDBCRUDController(PMDBContext dbcontext, CancellationTokenSource cts)
@@ -47,35 +57,72 @@ namespace Controllers.CRUDController
                     (token, state)=>
                     {
                         m_db.UsersTable.Add(entity);
-
-                        m_db.SaveChanges();
-
-                        return null;
+                        
+                        return m_db.SaveChanges(); 
 
                     }, null, m_cancellationTokenSource.Token
-                    );
-
-           
+                    );           
         }
 
-        public Task GetAsync(Guid id)
+        public async Task GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            if (id != default)
+                await ExecuteAndGetResultViaEventAsync(UserControllerOperations.GetUserById,
+                    (oken, state) =>
+                    {
+                        return (from u in m_db.UsersTable where u.Id == id select u).First() ?? null;
+                    }, null, m_cancellationTokenSource.Token);
         }
 
-        public Task GetAllAsync()
+        public async Task GetAllAsync()
         {
-            throw new NotImplementedException();
+            await ExecuteAndGetResultViaEventAsync(UserControllerOperations.GetAllUsers,
+                    (oken, state) =>
+                    {
+                        return m_db.UsersTable.ToList();
+                    }, null, m_cancellationTokenSource.Token);
         }
 
-        public Task RemoveAsync(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await ExecuteAndGetResultViaEventAsync(UserControllerOperations.RemoveUser,
+                    (oken, state) =>
+                    {
+                        var user = (from u in m_db.UsersTable where u.Id == id select u).First() ?? null;
+
+                        int rows = -1;
+
+                        if (user != null)
+                        {
+                            m_db.UsersTable.Remove(user);
+
+                            rows = m_db.SaveChanges();
+                        }
+                        return rows;
+
+                    }, null, m_cancellationTokenSource.Token);
         }
 
-        public Task UpdateAsync(Guid id, User newEntity)
+        public async Task UpdateAsync(Guid id, User newEntity, int bitmask)
         {
-            throw new NotImplementedException();
+            await ExecuteAndGetResultViaEventAsync(UserControllerOperations.RemoveUser,
+                    (oken, state) =>
+                    {
+                        var user = (from u in m_db.UsersTable where u.Id == id select u).First() ?? null;
+
+                        int rows = -1;
+
+                        if (user != null)
+                        {
+                            //Update system
+
+
+
+                            rows = m_db.SaveChanges();
+                        }
+                        return rows;
+
+                    }, null, m_cancellationTokenSource.Token);
         }
 
         #endregion

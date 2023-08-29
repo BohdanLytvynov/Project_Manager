@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ControllerLib_DotNetFramework">
+      <HintPath>..\..\..\Libraries\ControllerLib_DotNetFramework\ControllerLib_DotNetFramework\bin\Debug\ControllerLib_DotNetFramework.dll</HintPath>
+    </Reference>
     <Reference Include="CustomControlsLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Custom_WPF_Controls_CSharp_.NetFramework\CustomControlsLibrary\bin\Debug\CustomControlsLibrary.dll</HintPath>
@@ -87,6 +90,9 @@
     <Compile Include="Views\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\AddUser.xaml.cs">
+      <DependentUpon>AddUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\UserListWindow.xaml.cs">
       <DependentUpon>UserListWindow.xaml</DependentUpon>
     </Compile>
@@ -112,6 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Test.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\AddUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -148,6 +158,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Controllers\Controllers.csproj">
+      <Project>{3c304f44-87f4-45cb-8315-ec44929d1b35}</Project>
+      <Name>Controllers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Data\Data.csproj">
       <Project>{32ae08dc-4cf6-41da-adf3-a1262e4831fe}</Project>
       <Name>Data</Name>

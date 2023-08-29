@@ -20,7 +20,9 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40*"/>
             </Grid.RowDefinitions>
-            <ListView Margin="10" x:Name="lv"/>
+            <ListView Margin="10" x:Name="lv"
+                      ItemsSource="{Binding Users,
+                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <TextBlock 
                 Grid.Row="1"
                 TextAlignment="Left"
@@ -57,7 +59,8 @@
                     <RowDefinition Height="65*"/>
                 </Grid.RowDefinitions>
 
-                <Button Content="Добавить"/>
+                <Button Content="Добавить"
+                        Command="{Binding OnAddUserButtonPressed}"/>
 
                 <Button Content="Выбрать"
                         Grid.Row="2"/>

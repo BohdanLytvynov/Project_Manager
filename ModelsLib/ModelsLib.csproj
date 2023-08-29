@@ -33,9 +33,6 @@
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="StringExtensionsLibrary">
-      <HintPath>..\StringExtensionsLibrary\bin\Debug\StringExtensionsLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Models\ArchiveNote.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\UserVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

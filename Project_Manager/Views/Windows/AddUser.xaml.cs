@@ -1,7 +1,5 @@
-﻿using Project_Manager.ViewModels.Windows;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,20 +15,13 @@ using System.Windows.Shapes;
 namespace Project_Manager.Views.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для UserListWindow.xaml
+    /// Логика взаимодействия для AddUser.xaml
     /// </summary>
-    public partial class UserListWindow : Window
+    public partial class AddUser : Window
     {
-        UserListWindowViewModel m_vm;
-
-        public UserListWindow(DbConnectionStringBuilder conStrBuild)
+        public AddUser()
         {
             InitializeComponent();
-
-            m_vm = new UserListWindowViewModel(conStrBuild);
-
-            this.DataContext = m_vm;
         }
-        
     }
 }

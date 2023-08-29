@@ -15,6 +15,7 @@ using System.Windows.Data;
 using System.Data.Common;
 using Data;
 using Project_Manager.Views.Windows;
+using Data.DBContexts;
 
 namespace Project_Manager.ViewModels
 {
@@ -177,7 +178,7 @@ namespace Project_Manager.ViewModels
 
             #region Init Fields
 
-            usersWindow = new UserListWindow();
+            usersWindow = new UserListWindow(csbuild);
 
             #endregion
 

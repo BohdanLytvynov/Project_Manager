@@ -10,7 +10,7 @@ namespace Controllers.CRUDCOntroller.Inerfaces
     {
         Task AddAsync(TEntity entity);
 
-        Task UpdateAsync(Guid id, TEntity newEntity);
+        Task UpdateAsync(Guid id, TEntity newEntity, int bitmask);
 
         Task RemoveAsync(Guid id);
 
