@@ -7,11 +7,45 @@
         mc:Ignorable="d"
         Title="AddUser" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="40"/>
-            <RowDefinition/>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="42*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="33*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
+        <TextBlock Grid.Column="1" Grid.Row="1" Text="Логин:"/>
+        <TextBox Grid.Row="1" Grid.Column="3"/>
+        <TextBlock Grid.Column="1" Grid.Row="3" Text="Пароль:"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="5" Text="Повтоорите пароль:"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="7" Text="Секретное слово:"/>
+
+        <Grid Grid.Row="9" Grid.Column="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="185"/>
+                <ColumnDefinition Width="15"/>
+                <ColumnDefinition Width="185"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Добавиить"/>
+
+            <Button Content="Отмена" Grid.Column="2"/>
+        </Grid>
 
     </Grid>
 </Window>

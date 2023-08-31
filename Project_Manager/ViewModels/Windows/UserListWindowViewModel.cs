@@ -4,6 +4,7 @@ using Controllers.CRUDController;
 using Data.DBContexts;
 using Data.Models;
 using ModelsLib.Models;
+using Project_Manager.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +21,13 @@ namespace Project_Manager.ViewModels.Windows
 {
     public class UserListWindowViewModel : ViewModelBase
     {
+
+        #region Windows
+
+        AddUser m_addUserWindow;
+
+        #endregion
+
         #region Fields
 
         int m_usersCount;
@@ -61,6 +69,12 @@ namespace Project_Manager.ViewModels.Windows
         #region Ctor
         public UserListWindowViewModel(DbConnectionStringBuilder conStrBuilder)
         {
+            #region Init Windows
+
+            m_addUserWindow = new AddUser();
+
+            #endregion
+            
             #region Init fields
 
             m_usersCount = 0;
@@ -94,11 +108,7 @@ namespace Project_Manager.ViewModels.Windows
             if (obj.Success && obj.ExecutionState == ExecutionState.Finished)
             {
                 switch (obj.Name)
-                {
-                    case UserControllerOperations.AddUser:
-                        break;
-                    case UserControllerOperations.EditUser:
-                        break;
+                {                                     
                     case UserControllerOperations.RemoveUser:
                         break;
                     case UserControllerOperations.GetAllUsers:
@@ -123,8 +133,7 @@ namespace Project_Manager.ViewModels.Windows
                         break;
                     case UserControllerOperations.GetUserById:
                         break;
-                    default:
-                        break;
+                 
                 }
             }
             else
@@ -141,8 +150,10 @@ namespace Project_Manager.ViewModels.Windows
         private bool CanOnAddUserButtonPressedExecute(object p) => true;
 
         private void OnAddUserButtonPressedExecute(object p)
-        { 
-            
+        {
+            m_addUserWindow.Topmost = true;
+
+            m_addUserWindow.ShowDialog();
         }
         #endregion
 
