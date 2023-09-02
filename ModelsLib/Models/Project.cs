@@ -161,17 +161,17 @@ namespace ModelsLib.Models
         public Project(string name, string description, DateTime date, string cost
             , string urgency, string CustomerName)
         {
-            Urgency = urgency;
+            this.urgency = urgency;
 
-            Name = name;
+            this.name = name;
 
-            Description = description;
+            this.description = description;
 
-            Date = date;
+            this.date = date;
 
-            Str_Cost = cost;
+            this.str_Cost = cost;
 
-            this.CustomerName = CustomerName;            
+            this.customername = CustomerName;            
         }
         /// <summary>
         /// Sets the project border's color according to the urgency of the project

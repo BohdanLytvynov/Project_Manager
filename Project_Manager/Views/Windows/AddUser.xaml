@@ -4,8 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project_Manager.Views.Windows"
+        xmlns:vm="clr-namespace:Project_Manager.ViewModels.Windows"
+        xmlns:customControls="clr-namespace:CustomControlsLibrary;assembly=CustomControlsLibrary"
         mc:Ignorable="d"
         Title="AddUser" Height="450" Width="800">
+
+    <Window.DataContext>
+        <vm:AddUserViewModel/>
+    </Window.DataContext>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80"/>
@@ -28,12 +35,27 @@
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="1" Grid.Row="1" Text="Логин:"/>
-        <TextBox Grid.Row="1" Grid.Column="3"/>
+        <TextBox Grid.Row="1" Grid.Column="3" Style="{DynamicResource InputTextBox}">
+            <TextBox.Text>
+                <Binding Path="Login" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <TextBlock Grid.Column="1" Grid.Row="3" Text="Пароль:"/>
 
         <TextBlock Grid.Column="1" Grid.Row="5" Text="Повтоорите пароль:"/>
 
         <TextBlock Grid.Column="1" Grid.Row="7" Text="Секретное слово:"/>
+
+        <customControls:CustomPasswordBox Grid.Column="3" Grid.Row="3" Id="0"/>
+
+        <customControls:CustomPasswordBox Grid.Column="3" Grid.Row="5" Id="1"/>
+
+        <TextBox Grid.Row="7" Grid.Column="3" Style="{DynamicResource InputTextBox}">
+        </TextBox>
 
         <Grid Grid.Row="9" Grid.Column="3">
             <Grid.ColumnDefinitions>

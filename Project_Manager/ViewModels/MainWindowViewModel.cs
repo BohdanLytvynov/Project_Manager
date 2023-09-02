@@ -259,7 +259,7 @@ namespace Project_Manager.ViewModels
 
         private static void OnAppClosing(object s, CancelEventArgs e)
         {            
-            SaveCollections();                                             
+            //SaveCollections();                                             
         }
 
         private static void SaveCollections()

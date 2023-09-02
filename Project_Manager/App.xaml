@@ -8,8 +8,50 @@
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
 
-        <!--#region Calendar -->
-       
+        <!--#region TextBoxInputStyle -->
+
+        <Style x:Key="TextBoxInput" TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="Template" >
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Border x:Name="brd" BorderThickness="3" CornerRadius="10" BorderBrush="White">
+
+                                <TextBox Text="{Binding RelativeSource={RelativeSource TemplatedParent}, 
+                                    Path=Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Foreground="{TemplateBinding Foreground}"
+                                         FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}"
+                                         BorderThickness="0" BorderBrush="White"/>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Validation.HasError" Value="False">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="brd" Property="ItemsControl.BorderBrush" Value="Green"/>
+                                        <Setter TargetName="brd" Property="ItemsControl.BorderThickness" Value="5"/>
+                                    </Trigger.Setters>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Border BorderBrush="OrangeRed" BorderThickness="3">
+                                <Grid>
+                                    <AdornedElementPlaceholder/>
+                                    <TextBlock Text="{Binding [0].ErrorContent}" Foreground="OrangeRed"
+                                               VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="12"/>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+
         <!--#endregion-->
 
         <Style x:Key="GridSplitterVertical" TargetType="GridSplitter">
@@ -500,7 +542,7 @@
         </Style>
         <!--Datatemplate Project-->
 
-        <Style TargetType="TextBox" x:Key="InputBox">
+        <Style TargetType="TextBox" x:Key="InputTextBox">
             <Style.Setters>
                 <Setter Property="FontSize" Value="20"/>
                 <Setter Property="BorderThickness" Value="0"/>
