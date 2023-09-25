@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Project_Manager.ViewModels.Windows;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +21,10 @@ namespace Project_Manager.Views.Windows
     /// </summary>
     public partial class AddUser : Window
     {
-        public AddUser()
+        public AddUser(DbConnectionStringBuilder conStrBuilder)
         {
+            AddUserViewModel m_vm = new AddUserViewModel(conStrBuilder);
+
             InitializeComponent();
         }
     }

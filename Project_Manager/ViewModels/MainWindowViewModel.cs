@@ -31,12 +31,12 @@ namespace Project_Manager.ViewModels
     public class MainWindowViewModel: ViewModelCommon
     {
         #region Windows
-
-        UserListWindow usersWindow;
-
+        
         #endregion
 
         #region Fields
+
+        private DbConnectionStringBuilder m_csbuild;
 
         private string m_pathToExe;
 
@@ -154,15 +154,14 @@ namespace Project_Manager.ViewModels
 
             //ConnectToLocalDB
 
-            DbConnectionStringBuilder csbuild =
-                new DbConnectionStringBuilder();
+            m_csbuild = new DbConnectionStringBuilder();
 
-            csbuild.ConnectionString =
+            m_csbuild.ConnectionString =
                 "Data Source=(LocalDB)\\MSSQLLocalDB;" +
                 $"AttachDbFilename={pathToDB};" +
                 "Integrated Security=True;Connect Timeout=30";
 
-            PMDBContext pmdb = new PMDBContext(csbuild.ConnectionString);
+            PMDBContext pmdb = new PMDBContext(m_csbuild.ConnectionString);
 
             #endregion
 
@@ -177,9 +176,7 @@ namespace Project_Manager.ViewModels
             #endregion
 
             #region Init Fields
-
-            usersWindow = new UserListWindow(csbuild);
-
+            
             #endregion
 
             #region Init Commands
@@ -474,6 +471,8 @@ namespace Project_Manager.ViewModels
 
         private void OnUsersButtonPressedExecute(object p)
         {
+            UserListWindow usersWindow = new UserListWindow(m_csbuild);
+
             usersWindow.Topmost = true;
 
             usersWindow.Show();            

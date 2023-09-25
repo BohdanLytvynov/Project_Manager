@@ -39,7 +39,7 @@
                 <Setter Property="Validation.ErrorTemplate">
                     <Setter.Value>
                         <ControlTemplate>
-                            <Border BorderBrush="OrangeRed" BorderThickness="3">
+                            <Border BorderBrush="OrangeRed" BorderThickness="5" CornerRadius="10">
                                 <Grid>
                                     <AdornedElementPlaceholder/>
                                     <TextBlock Text="{Binding [0].ErrorContent}" Foreground="OrangeRed"
@@ -542,14 +542,14 @@
         </Style>
         <!--Datatemplate Project-->
 
-        <Style TargetType="TextBox" x:Key="InputTextBox">
+        <!--<Style TargetType="TextBox" x:Key="InputTextBox">
             <Style.Setters>
                 <Setter Property="FontSize" Value="20"/>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="BorderBrush" Value="White"/>
                 <Setter Property="Margin" Value="10,0"/>
             </Style.Setters>
-        </Style>
+        </Style>-->
 
         <Style TargetType="Border" x:Key="BoxBorder">
             <Style.Setters>
@@ -572,7 +572,7 @@
                     <Border Style="{StaticResource BoxBorder}">
                         <TextBox Text="{Binding Name, 
                         UpdateSourceTrigger=PropertyChanged, Mode=TwoWay
-                        }" Style="{StaticResource InputBox}" TextWrapping="Wrap"
+                        }" Style="{StaticResource TextBoxInput}" TextWrapping="Wrap"
                                  AcceptsReturn="True" AcceptsTab="True"
                                 />
                     </Border>
@@ -581,7 +581,7 @@
                         UpdateSourceTrigger=PropertyChanged,
                         Mode=TwoWay}" Width="150" TextWrapping="Wrap"
                              AcceptsReturn="True" AcceptsTab="True" MaxLength="30000"
-                                 Style="{StaticResource InputBox}"/>
+                                 Style="{StaticResource TextBoxInput}"/>
                     </Border>
 
                    
@@ -628,7 +628,7 @@
                                 <TextBox 
                                     Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
                                     x:Name="CMI1"
-                                    Style="{StaticResource InputBox}"
+                                    Style="{StaticResource TextBoxInput}"
                                     TextWrapping="Wrap"
                                     AcceptsReturn="True"
                                     AcceptsTab="True"                                    
@@ -642,7 +642,7 @@
                                     UpdateSourceTrigger=PropertyChanged,
                                     Mode=TwoWay}"
                                              x:Name="CMI2"
-                                    Style="{StaticResource InputBox}"
+                                    Style="{StaticResource TextBoxInput}"
                                           />
                                     <TextBlock Text="Ед." FontSize="20"/>
                                 </StackPanel>

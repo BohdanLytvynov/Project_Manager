@@ -13,6 +13,16 @@
         <vm:AddUserViewModel/>
     </Window.DataContext>
 
+    <Window.Resources>
+        <Style x:Key="PassBoxBorder" TargetType="Border">
+            <Style.Setters>
+                <Setter Property="BorderBrush" Value="Green"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="BorderThickness" Value="3"/>
+            </Style.Setters>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80"/>
@@ -35,7 +45,9 @@
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="1" Grid.Row="1" Text="Логин:"/>
-        <TextBox Grid.Row="1" Grid.Column="3" Style="{DynamicResource InputTextBox}">
+        <TextBox Grid.Row="1" Grid.Column="3" 
+                 Margin="5"
+                 Style="{DynamicResource TextBoxInput}">
             <TextBox.Text>
                 <Binding Path="Login" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                     <Binding.ValidationRules>
@@ -50,11 +62,29 @@
 
         <TextBlock Grid.Column="1" Grid.Row="7" Text="Секретное слово:"/>
 
-        <customControls:CustomPasswordBox Grid.Column="3" Grid.Row="3" Id="0"/>
+        <customControls:CustomPasswordBox Grid.Column="3" Grid.Row="3" Id="0"
+                                          CheckPasswordDelegate="{Binding CheckPasswords,
+            UpdateSourceTrigger=PropertyChanged}"
+                                          BorderStyle="{DynamicResource PassBoxBorder}"
+                                          />
 
-        <customControls:CustomPasswordBox Grid.Column="3" Grid.Row="5" Id="1"/>
+        <customControls:CustomPasswordBox Grid.Column="3" Grid.Row="5" Id="1"
+                                          CheckPasswordDelegate="{Binding CheckPasswords,
+            UpdateSourceTrigger=PropertyChanged}"
+                                          BorderStyle="{DynamicResource PassBoxBorder}"
+                                          />
 
-        <TextBox Grid.Row="7" Grid.Column="3" Style="{DynamicResource InputTextBox}">
+        <TextBox Grid.Row="7" Grid.Column="3" 
+                 Margin="5"
+                 Style="{DynamicResource TextBoxInput}">
+            <TextBox.Text>
+                <Binding Path="KeyWord" UpdateSourceTrigger="PropertyChanged"
+                         Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
         </TextBox>
 
         <Grid Grid.Row="9" Grid.Column="3">

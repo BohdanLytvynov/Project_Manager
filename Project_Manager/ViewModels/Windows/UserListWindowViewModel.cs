@@ -68,13 +68,7 @@ namespace Project_Manager.ViewModels.Windows
 
         #region Ctor
         public UserListWindowViewModel(DbConnectionStringBuilder conStrBuilder)
-        {
-            #region Init Windows
-
-            m_addUserWindow = new AddUser();
-
-            #endregion
-            
+        {                       
             #region Init fields
 
             m_usersCount = 0;
@@ -151,6 +145,8 @@ namespace Project_Manager.ViewModels.Windows
 
         private void OnAddUserButtonPressedExecute(object p)
         {
+            m_addUserWindow = new AddUser();
+
             m_addUserWindow.Topmost = true;
 
             m_addUserWindow.ShowDialog();
