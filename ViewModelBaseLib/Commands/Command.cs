@@ -15,15 +15,14 @@ namespace ViewModelBaseLib.Commands
         public override bool CanExecute(object parameter) =>
             canexecute?.Invoke(parameter) ?? true;
 
-
         public override void Execute(object parameter) =>
-            execute?.Invoke(parameter);
-       
-        public Command(Func<object, bool> CanExecute, Action<object>Execute)
-        {
-            execute = Execute;
+            execute.Invoke(parameter);
 
-            canexecute = CanExecute;
+        public Command(Func<object, bool> canExecute, Action<object> execute)
+        {
+           this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
+
+            canexecute = canExecute;
         }
     }
 }

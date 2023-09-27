@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Controllers.CRUDCOntroller.Inerfaces
 {
-    internal interface ICRUDControllerAsync<TEntity>
+    public interface ICRUDControllerAsync<TEntity>
     {
         Task AddAsync(TEntity entity);
 
@@ -17,5 +18,7 @@ namespace Controllers.CRUDCOntroller.Inerfaces
         Task GetAllAsync();
 
         Task GetAsync(Guid id);
+       
+        Task<Guid> GenerateIdAsync();
     }
 }

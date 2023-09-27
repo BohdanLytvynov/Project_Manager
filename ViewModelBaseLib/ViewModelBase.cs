@@ -89,7 +89,7 @@ namespace ViewModelBaseLib.ViewModelBase
             if (end > m_ValidArray.Length - 1)
                 throw new ArgumentOutOfRangeException("end parametr is ou of range!");
 
-            for (int i = start; i < end; i++)            
+            for (int i = start; i <= end; i++)            
                 if (!m_ValidArray[i])
                     return false;
             

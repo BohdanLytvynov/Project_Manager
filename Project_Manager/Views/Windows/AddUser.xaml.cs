@@ -1,4 +1,6 @@
-﻿using Project_Manager.ViewModels.Windows;
+﻿using Controllers.CRUDController;
+using Controllers.Managers;
+using Project_Manager.ViewModels.Windows;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -21,11 +23,13 @@ namespace Project_Manager.Views.Windows
     /// </summary>
     public partial class AddUser : Window
     {
-        public AddUser(DbConnectionStringBuilder conStrBuilder)
+        public AddUser(DbConnectionStringBuilder connectionStringBuilder)
         {
-            AddUserViewModel m_vm = new AddUserViewModel(conStrBuilder);
+            AddUserViewModel m_vm = new AddUserViewModel(connectionStringBuilder);
 
             InitializeComponent();
+
+            this.DataContext = m_vm;
         }
     }
 }

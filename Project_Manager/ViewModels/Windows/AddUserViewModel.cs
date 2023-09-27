@@ -1,13 +1,20 @@
-﻿using CustomControlsLibrary.Extentions;
+﻿using Controllers.CRUDController;
+using Controllers.Managers;
+using CustomControlsLibrary.Extentions;
+using Data.DBContexts;
+using Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Linq;
 using System.Security;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ViewModelBaseLib.Commands;
 using ViewModelBaseLib.ViewModelBase;
 
 namespace Project_Manager.ViewModels.Windows
@@ -15,7 +22,9 @@ namespace Project_Manager.ViewModels.Windows
     public class AddUserViewModel : ViewModelBase
     {
         #region Fields
-       
+
+        UserManager m_userManager;
+
         string m_login;
 
         SecureString m_password;
@@ -23,6 +32,8 @@ namespace Project_Manager.ViewModels.Windows
         string m_keyWord;
 
         Func<int, SecureString, TextBlock, bool> m_checkPassword;
+
+        CancellationTokenSource m_cts;
 
         #endregion
 
@@ -49,12 +60,20 @@ namespace Project_Manager.ViewModels.Windows
                 {
                     case nameof(Login)://Login field check
 
-                        m_ValidArray[0] = !String.IsNullOrEmpty(Login);
-
-                        if (!m_ValidArray[0])
+                        if (String.IsNullOrEmpty(Login))
                         {
-                            error = "Поле не должно быть пустым!";
+                            m_ValidArray[0] = false;
+
+                            error = "Пустое поле!";
                         }
+                        else if(m_userManager.IsLoginExists(Login))
+                        {
+                            m_ValidArray[0] = false;
+
+                            error = "Такой ЛОГИН уже существует!";
+                        }
+
+                        m_ValidArray[0] = true;
 
                         break;
 
@@ -85,9 +104,13 @@ namespace Project_Manager.ViewModels.Windows
         #endregion
 
         #region Ctor
-        public AddUserViewModel(DbConnectionStringBuilder conStrBuilder)
+        public AddUserViewModel(DbConnectionStringBuilder conStringBuilder)
         {
             #region Init Fields
+
+            m_cts = new CancellationTokenSource();
+
+            m_userManager = new UserManager(new PMDBContext(conStringBuilder.ConnectionString), m_cts);
 
             m_login = String.Empty;
 
@@ -96,6 +119,15 @@ namespace Project_Manager.ViewModels.Windows
             m_checkPassword = new Func<int, SecureString, TextBlock, bool>(CheckPassword);
                        
             m_ValidArray = new bool[4];
+
+            #endregion
+
+            #region Init Commands
+
+            OnAddUserButtonPressed = new Command(
+                CanOnAddUserButtonPressedExecute,
+                OnAddUserButtonPressedExecute
+                );
 
             #endregion
         }
@@ -153,12 +185,26 @@ namespace Project_Manager.ViewModels.Windows
 
         private bool CanOnAddUserButtonPressedExecute(object p)
         {
+            //Debug.WriteLine("In Can Method");
+            //int i = 0;
+            //foreach (var item in m_ValidArray)
+            //{
+            //    Debug.WriteLine($"Valid {i}: {item}");
+            //}
+
             return CheckValidArray(0, 3);
         }
 
-        private void OnAddUserButtonPressedExecute(object p)
-        { 
-            
+        private async void OnAddUserButtonPressedExecute(object p)
+        {
+            //Guid id = await m_userDbController.GenerateId();
+
+            //await m_userDbController.AddAsync(
+            //    new User
+            //    (
+            //        id, Login,     
+            //    )
+            //    );
         }
 
         #endregion

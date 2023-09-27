@@ -1,6 +1,7 @@
 ﻿using ControllerLib_DotNetFramework.Enums;
 using ControllerLib_DotNetFramework.Interfaces.Controller;
 using Controllers.CRUDController;
+using Controllers.Managers;
 using Data.DBContexts;
 using Data.Models;
 using ModelsLib.Models;
@@ -34,9 +35,11 @@ namespace Project_Manager.ViewModels.Windows
 
         ObservableCollection<UserVM> m_users;
 
-        UserDBCRUDController m_userDBCRUDController;
+        UserManager m_um;
 
         CancellationTokenSource m_cts;
+
+        DbConnectionStringBuilder m_constrBuilder;
 
         #endregion
 
@@ -68,8 +71,10 @@ namespace Project_Manager.ViewModels.Windows
 
         #region Ctor
         public UserListWindowViewModel(DbConnectionStringBuilder conStrBuilder)
-        {                       
+        {
             #region Init fields
+
+            m_constrBuilder = conStrBuilder;
 
             m_usersCount = 0;
 
@@ -77,11 +82,9 @@ namespace Project_Manager.ViewModels.Windows
 
             m_cts = new CancellationTokenSource();
 
-            m_userDBCRUDController = new UserDBCRUDController(
-                new PMDBContext(conStrBuilder.ConnectionString), m_cts
-                );
+            m_um = new UserManager(new PMDBContext(conStrBuilder.ConnectionString), m_cts);
 
-            m_userDBCRUDController.OnOperationCompleted += M_userDBCRUDController_OnOperationCompleted;
+            m_um.OnOperationCompleted += M_um_OnOperationCompleted;
 
             #endregion
 
@@ -94,47 +97,45 @@ namespace Project_Manager.ViewModels.Windows
 
             #endregion
 
-            m_userDBCRUDController.GetAllAsync();
+            m_um.GetAllUsersAsync();
+            
         }
 
-        private void M_userDBCRUDController_OnOperationCompleted(IOperationResult<UserControllerOperations> obj)
+        private void M_um_OnOperationCompleted(IOperationResult<UserManagerOperations> obj)
         {
-            if (obj.Success && obj.ExecutionState == ExecutionState.Finished)
+            if (obj == null)
+                return;
+
+            if (obj.ExecutionState == ExecutionState.Finished)
             {
                 switch (obj.Name)
-                {                                     
-                    case UserControllerOperations.RemoveUser:
-                        break;
-                    case UserControllerOperations.GetAllUsers:
+                {                                      
+                    case UserManagerOperations.GetAllUsers:
 
                         if (Users.Count > 0)
                             Users.Clear();
 
-                        var users = obj.Result as List<User>;
-
-                        if (users != null && users.Count > 0)
+                        foreach (User user in obj.Result)
                         {
-                            foreach (var u in users)
-                            {
-                                Users.Add(
-                                    new UserVM(
-                                        u.Id, u.Login
-                                        )
-                                    );
-                            }
+                            Users.Add(new UserVM(user.Id, user.Login));
                         }
 
                         break;
-                    case UserControllerOperations.GetUserById:
-                        break;
-                 
+                   
                 }
+            }
+            else if (obj.ExecutionState == ExecutionState.Canceled)
+            { 
+            
             }
             else
             {
 
             }
+
         }
+
+
         #endregion
 
         #region Methods
@@ -145,7 +146,7 @@ namespace Project_Manager.ViewModels.Windows
 
         private void OnAddUserButtonPressedExecute(object p)
         {
-            m_addUserWindow = new AddUser();
+            m_addUserWindow = new AddUser(m_constrBuilder);
 
             m_addUserWindow.Topmost = true;
 

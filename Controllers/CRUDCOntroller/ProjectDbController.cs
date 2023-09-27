@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 namespace Controllers.CRUDController
 {
     public enum UserControllerOperations
-    { 
-        AddUser = 0, EditUser, RemoveUser, GetAllUsers, GetUserById
+    {
+        AddProject = 0, EditProject, RemoveProject, GetAllProject, GetProjectById
     }
 
-    public class UserDBCRUDController : ControllerBase<UserControllerOperations>, ICRUDControllerAsync<User>
+    public class ProjectDbController : ControllerBase<UserControllerOperations>, ICRUDControllerAsync<User>
     {
         #region Fields
 
@@ -29,17 +29,17 @@ namespace Controllers.CRUDController
 
         #region Properties
 
-        public CancellationTokenSource CancellationTokenSource 
+        public CancellationTokenSource CancellationTokenSource
         {
-            get=> m_cancellationTokenSource;
-            set=> m_cancellationTokenSource = value;
+            get => m_cancellationTokenSource;
+            set => m_cancellationTokenSource = value;
         }
 
         #endregion
 
         #region Ctor
 
-        public UserDBCRUDController(PMDBContext dbcontext, CancellationTokenSource cts)
+        public ProjectDbController(PMDBContext dbcontext, CancellationTokenSource cts)
         {
             m_db = dbcontext;
 
@@ -52,22 +52,22 @@ namespace Controllers.CRUDController
 
         public async Task AddAsync(User entity)
         {
-            if(entity != null)
-                await ExecuteAndGetResultViaEventAsync(UserControllerOperations.AddUser,
-                    (token, state)=>
+            if (entity != null)
+                await ExecuteAndGetResultViaEventAsync(UserControllerOperations.AddProject,
+                    (token, state) =>
                     {
                         m_db.UsersTable.Add(entity);
-                        
-                        return m_db.SaveChanges(); 
+
+                        return m_db.SaveChanges();
 
                     }, null, m_cancellationTokenSource.Token
-                    );           
+                    );
         }
 
         public async Task GetAsync(Guid id)
         {
             if (id != default)
-                await ExecuteAndGetResultViaEventAsync(UserControllerOperations.GetUserById,
+                await ExecuteAndGetResultViaEventAsync(UserControllerOperations.GetProjectById,
                     (oken, state) =>
                     {
                         return (from u in m_db.UsersTable where u.Id == id select u).First() ?? null;
@@ -76,7 +76,7 @@ namespace Controllers.CRUDController
 
         public async Task GetAllAsync()
         {
-            await ExecuteAndGetResultViaEventAsync(UserControllerOperations.GetAllUsers,
+            await ExecuteAndGetResultViaEventAsync(UserControllerOperations.GetAllProject,
                     (oken, state) =>
                     {
                         return m_db.UsersTable.ToList();
@@ -85,7 +85,7 @@ namespace Controllers.CRUDController
 
         public async Task RemoveAsync(Guid id)
         {
-            await ExecuteAndGetResultViaEventAsync(UserControllerOperations.RemoveUser,
+            await ExecuteAndGetResultViaEventAsync(UserControllerOperations.RemoveProject,
                     (oken, state) =>
                     {
                         var user = (from u in m_db.UsersTable where u.Id == id select u).First() ?? null;
@@ -105,7 +105,7 @@ namespace Controllers.CRUDController
 
         public async Task UpdateAsync(Guid id, User newEntity, int bitmask)
         {
-            await ExecuteAndGetResultViaEventAsync(UserControllerOperations.RemoveUser,
+            await ExecuteAndGetResultViaEventAsync(UserControllerOperations.RemoveProject,
                     (oken, state) =>
                     {
                         var user = (from u in m_db.UsersTable where u.Id == id select u).First() ?? null;
@@ -124,6 +124,25 @@ namespace Controllers.CRUDController
 
                     }, null, m_cancellationTokenSource.Token);
         }
+
+        public async Task<Guid> GenerateIdAsync()
+        {
+            Guid temp = Guid.NewGuid();
+
+            await Task.Run(
+                () =>
+                {
+                    while ((m_db.UsersTable.Where(u => u.Id.Equals(temp))).Count() > 0)
+                    {
+                        temp = Guid.NewGuid();
+                    }
+                }
+                );
+
+            return temp;
+        }
+
+
 
         #endregion
 

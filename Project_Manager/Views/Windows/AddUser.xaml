@@ -9,9 +9,7 @@
         mc:Ignorable="d"
         Title="AddUser" Height="450" Width="800">
 
-    <Window.DataContext>
-        <vm:AddUserViewModel/>
-    </Window.DataContext>
+
 
     <Window.Resources>
         <Style x:Key="PassBoxBorder" TargetType="Border">
@@ -94,7 +92,7 @@
                 <ColumnDefinition Width="185"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="Добавиить"/>
+            <Button Content="Добавиить" Command="{Binding OnAddUserButtonPressed}"/>
 
             <Button Content="Отмена" Grid.Column="2"/>
         </Grid>
