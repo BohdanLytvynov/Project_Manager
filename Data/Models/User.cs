@@ -28,6 +28,8 @@ namespace Data.Models
 
         public string KeyWord { get; set; }
 
+        public Salt SaltEntity { get; set; }
+
         #endregion
 
         #endregion
@@ -48,7 +50,7 @@ namespace Data.Models
             ArchiveNotes = new List<ArchiveNote>();
         }
 
-        public User(Guid id, string login, string password, string keyword)
+        public User(Guid id, string login, string password, string keyword, Salt saltEntity)
         {
             Id = id;
 
@@ -61,11 +63,16 @@ namespace Data.Models
             Projects = new List<ProjectDB>();
 
             ArchiveNotes = new List<ArchiveNote>();
+
+            SaltEntity = saltEntity;
         }
         #endregion
 
         #region Methods
-
+        public override string ToString()
+        {
+            return $"{Id} {Login} {SaltEntity}";
+        }
         #endregion
     }
 }

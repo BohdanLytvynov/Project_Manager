@@ -18,6 +18,8 @@ namespace Data.DBContexts
 
         #region DBSets
 
+        public DbSet<Salt> Salts { get; set; }
+
         public DbSet<ProjectDB> ProjectsTable { get; set; }
 
         public DbSet<User> UsersTable { get; set; }
@@ -31,7 +33,9 @@ namespace Data.DBContexts
         #region Ctor
         public PMDBContext(string connectionString):base(connectionString)
         {
-          
+            Database.Delete();
+
+            Database.Create();
         }
         #endregion
 

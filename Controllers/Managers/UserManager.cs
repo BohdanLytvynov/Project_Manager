@@ -20,13 +20,19 @@ namespace Controllers.Managers
     }
 
     public class UserManager : ControllerBase<UserManagerOperations>, IUserManager<User>,
-        IGenerateId<PMDBContext>
+        IGenerateId
     {
         #region Fields
 
         private PMDBContext m_db;
 
         private CancellationTokenSource m_cts;
+
+        #endregion
+
+        #region Properties
+
+        public PMDBContext DataBase { get => m_db; }
 
         #endregion
 
@@ -38,7 +44,7 @@ namespace Controllers.Managers
             m_cts = cts;
         }
 
-        public Guid Generate(PMDBContext dbContext)
+        public Guid Generate()
         {
             Guid id = Guid.NewGuid();
 
@@ -85,7 +91,19 @@ namespace Controllers.Managers
 
         public async Task RegisterAsync(User user)
         {
-            throw new NotImplementedException();
+            if (user != null)
+                await ExecuteAndGetResultViaEventAsync
+                    (
+                        UserManagerOperations.Register,
+                        (cts, state) => 
+                        {
+                            m_db.UsersTable.Add(user);
+
+                            m_db.SaveChanges();
+
+                            return null;
+                        }, null, m_cts.Token
+                    );
         }
 
         #endregion

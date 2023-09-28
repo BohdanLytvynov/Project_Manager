@@ -65,6 +65,10 @@
       <Project>{32ae08dc-4cf6-41da-adf3-a1262e4831fe}</Project>
       <Name>Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Encryption\Encryption.csproj">
+      <Project>{77f6e1f3-3cc5-41be-b1ca-e75e7895a144}</Project>
+      <Name>Encryption</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

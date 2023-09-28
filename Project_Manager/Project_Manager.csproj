@@ -176,6 +176,10 @@
       <Project>{bb83d5d5-0a45-440c-a360-814e05fd7201}</Project>
       <Name>DispatcherJsonSerialization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Encryption\Encryption.csproj">
+      <Project>{77f6e1f3-3cc5-41be-b1ca-e75e7895a144}</Project>
+      <Name>Encryption</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModelsLib\ModelsLib.csproj">
       <Project>{7d787bf2-6a58-4e86-afba-92fb53583f02}</Project>
       <Name>ModelsLib</Name>

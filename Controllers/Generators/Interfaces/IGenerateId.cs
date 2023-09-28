@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Controllers.Generators.Interfaces
 {
-    public interface IGenerateId<TDbContextType>
-        where TDbContextType : DbContext
+    public interface IGenerateId        
     {
-        Guid Generate(TDbContextType dbContext);
+        Guid Generate();
     }
 }

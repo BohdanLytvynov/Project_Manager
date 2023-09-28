@@ -3,6 +3,7 @@ using Controllers.Managers;
 using CustomControlsLibrary.Extentions;
 using Data.DBContexts;
 using Data.Models;
+using Encryption;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -22,6 +23,8 @@ namespace Project_Manager.ViewModels.Windows
     public class AddUserViewModel : ViewModelBase
     {
         #region Fields
+      
+        DBEncryption m_encrypt;
 
         UserManager m_userManager;
 
@@ -108,6 +111,10 @@ namespace Project_Manager.ViewModels.Windows
         {
             #region Init Fields
 
+            var m_enc = new UTF8Encoding();
+
+            m_encrypt = new DBEncryption(m_enc);
+
             m_cts = new CancellationTokenSource();
 
             m_userManager = new UserManager(new PMDBContext(conStringBuilder.ConnectionString), m_cts);
@@ -184,27 +191,29 @@ namespace Project_Manager.ViewModels.Windows
         #region On Add User Button Pressed Execute
 
         private bool CanOnAddUserButtonPressedExecute(object p)
-        {
-            //Debug.WriteLine("In Can Method");
-            //int i = 0;
-            //foreach (var item in m_ValidArray)
-            //{
-            //    Debug.WriteLine($"Valid {i}: {item}");
-            //}
-
+        {           
             return CheckValidArray(0, 3);
         }
 
         private async void OnAddUserButtonPressedExecute(object p)
         {
-            //Guid id = await m_userDbController.GenerateId();
+            Guid id = m_userManager.Generate();
 
-            //await m_userDbController.AddAsync(
-            //    new User
-            //    (
-            //        id, Login,     
-            //    )
-            //    );
+            Salt s = new Salt(Guid.NewGuid(), 
+                m_encrypt.GenerateRandomString(m_password.Length),
+                m_encrypt.GenerateRandomString(KeyWord.Length));
+            
+            await m_userManager.RegisterAsync
+                (
+                    new User(id, Login, 
+                    m_encrypt.Hash(m_password.GetBytes(m_encrypt.Encoding), 
+                    m_encrypt.Encoding.GetBytes(DBEncryption.StringToChars(s.PassSalt))),
+
+                    m_encrypt.Hash(m_encrypt.Encoding.GetBytes(DBEncryption.StringToChars(KeyWord)),
+                    m_encrypt.Encoding.GetBytes(DBEncryption.StringToChars(s.KeyWordSalt))),
+                    s
+                    )
+                );
         }
 
         #endregion
